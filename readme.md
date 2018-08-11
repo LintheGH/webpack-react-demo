@@ -1,8 +1,3 @@
----
-title: 构建 webpack
-tags: webpack
-notebook: framework
----
 ## 配置 webpack 自动打包工具示例
 - 安装 webpack 
   ```
@@ -12,7 +7,7 @@ notebook: framework
   // 安装完成初始化 node 环境，配置 webpack.config.js 文件
   ```
 - webpack.config.js 文件配置
-  ```
+  ```javascript
   // 引入 node.js 的核心模块 path
   const path = require('path')
   // 配置文件需要暴露出一个对象
@@ -40,7 +35,7 @@ notebook: framework
 
   - 在目录中建立 build 文件夹存放配置文件
   - 在 build 目录中建立通用配置 webpack.base.js 文件，设置通用配置
-    ```
+    ```javascript
     const path = require('pathpath')
     const base_config = {
       entry: {
@@ -54,7 +49,7 @@ notebook: framework
     module.exports = base_config
     ```
   - 根据需要，建立用于开发环境的 webpack.dev.js 文件和用于生产环境的webpack.pro.js 文件
-    ```
+    ```javascript
     /* webpack.dev.js 文件 */
     const base_config = require('./webpack.base')// 引入通用配置
     const development_config = {
@@ -77,7 +72,7 @@ notebook: framework
     ```
     > 当 node 版本太低时不支持 `...` 对象展开命令，需要使用 webpack-merge 包
   - 创建 index.js 文件，用于 webpack 命令执行
-    ```
+    ```javascript
     /* index.js 文件 */
     const development_config = require('./webpack.dev')
     const production_config = require('./webpack.pro')
@@ -93,7 +88,7 @@ notebook: framework
     webpack --env production --config ./build
     ```
   - 配置 package.json 文件，简化命令输入
-    ```
+    ```javascript
     /*package.json 文件 script 部分*/
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
@@ -114,7 +109,7 @@ notebook: framework
       npm i html-webpack-plugin -D
       ```
     - 在 build/webpack.base.js 中添加
-    ```
+    ```javascript
     const base_config = {
       entry: {...},
       output: {...},
@@ -151,7 +146,7 @@ notebook: framework
       npm i node-sass -D // node 处理 sass 模块
       ```
     - 在 build/webpack.base.js 添加
-      ```
+      ```javascript
       module: {
         rules: [
           { test: /\.css$/g, use: ['style-loader', 'css-loader'] },
@@ -166,7 +161,7 @@ notebook: framework
       ```
       > extract-text-webpack-plugin 最新稳定版还不能支持webpack4.0.0以上的版本，使用起来会报错，所以这里使用 @next 命令安装最新版
     - 配置
-      ```
+      ```javascript
       plugins: [
         new HtmlWebpackPlugin({...}),
         new ExtractTextPlugin ({
@@ -201,7 +196,7 @@ notebook: framework
       ```
     - 配置： 
       - 在 webpack 项目目录下创建 postcss.config.js 文件并配置
-        ```
+        ```javascript
         module.exports = {
           plugins: [
             require('autoprefixer')
@@ -209,7 +204,7 @@ notebook: framework
         }
         ```
       - 在 webpack.base.js 配置中添加
-        ```
+        ```javascript
         // 在 use 配置中 css-loader 前添加 postcss-loader 即可
         {
         test: /\.css$/,
@@ -227,7 +222,7 @@ notebook: framework
         }
         ```
       - 在 package.json 文件中添加浏览器支持
-        ```
+        ```javascript
         "browserslist": [
           "defaults",
           "not ie < 11",
